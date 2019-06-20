@@ -7,9 +7,10 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, View, Text,  TextInput} from 'react-native';
+import {Platform, StyleSheet, View, Text,  TextInput, ListView, Keyboard} from 'react-native';
 import Header from "./Header";
 import Footer from "./Footer";
+import Row from "./Row.js";
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -21,10 +22,12 @@ const instructions = Platform.select({
 export default class App extends Component {
   constructor(props){
     super(props);
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       allComplete: false,
       value : "",
-      items : []
+      items : [],
+      dataSource: ds.cloneWithRows([])
     }
     this.handleAddItem = this.handleAddItem.bind(this);
     this.handleToggleAllComplete = this.handleToggleAllComplete.bind(this);
@@ -66,7 +69,21 @@ export default class App extends Component {
         onToggleAllComplete = {this.handleToggleAllComplete}
         />
         <View style={styles.content}>
-
+          <ListView 
+            style = {styles.list}
+            enableEmptySections
+            dataSource={this.state.dataSource}
+            onScroll={() => Keyboard.dismiss()}
+            renderRow={({key, ...value}) => {
+              return (<Row key = {key}
+              {...value}
+              />
+              )
+            }}
+            renderSeparator = {(sectionId,  rowId) => {
+              return <View key={rowId} style = {stylesd.separator}/>
+            }}
+          />
         </View>
         <Footer />
       </View>
@@ -84,5 +101,12 @@ const styles = StyleSheet.create({
   },
   content:{
     flex: 1
+  },
+  list:{
+    backgroundColor: '#FFF'
+  },
+  separator: {
+    borderWidth: 1,
+    borderColor: '#F5F5F5'
   }
 })
