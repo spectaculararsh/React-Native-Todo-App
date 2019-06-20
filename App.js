@@ -8,9 +8,9 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, View, Text,  TextInput, ListView, Keyboard} from 'react-native';
-import Header from "./Header";
-import Footer from "./Footer";
-import Row from "./Row.js";
+import Header from "./views/Header";
+import Footer from "./views/Footer";
+import Row from "./views/Row";
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
