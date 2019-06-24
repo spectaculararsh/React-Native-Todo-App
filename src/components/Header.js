@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity} from "react-native"
-
+//Header component for header data containing various functionalities
 class Header extends Component{
     render(){
         return (
